@@ -3,7 +3,7 @@ A Chat Application using flutter and firebase.
 
 
 
-![image](https://github.com/Mohit-Gajjar/Flutter-chat-application/blob/master/assets/Untitled%20design%20(1).png?raw=true)
+![image](https://github.com/Mohit-Gajjar/Flutter-chat-application/blob/master/assets/Untitled%20design%20(2).png?raw=true)
 
 
 ## Installation
