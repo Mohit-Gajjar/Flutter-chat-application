@@ -9,27 +9,31 @@ class AuthMethod {
     return UserId(userId: user.uid);
   }
 
-  Future signInWithEmailAndPassword(String email, String password) async {
+  Future signInWithEmailAndPassword(
+      String email, String password, BuildContext context) async {
     try {
       UserCredential result = await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
       User? firebseuser = result.user;
       return _userFromFirebaseUser(firebseuser!);
-    } catch (e) {
-      print(e.toString());
+    } on FirebaseAuthException catch (e) {
+      SnackBar snackBar = SnackBar(content: Text(e.message!));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
   }
 
-  Future signUpWithEmailAndPassword(String email, String password) async {
-    try {
-      UserCredential result = await _firebaseAuth
-          .createUserWithEmailAndPassword(email: email, password: password);
-      User? firebaseuser = result.user;
-      return _userFromFirebaseUser(firebaseuser!);
-    } catch (e) {
-      print(e.toString());
-    }
-  }
+  // Future signUpWithEmailAndPassword(
+  //     String email, String password, BuildContext context) async {
+  //   try {
+  //     UserCredential result = await _firebaseAuth
+  //         .createUserWithEmailAndPassword(email: email, password: password);
+  //     User? firebaseuser = result.user;
+  //     return _userFromFirebaseUser(firebaseuser!);
+  //   } on FirebaseAuthException catch (e) {
+  //     SnackBar snackBar = SnackBar(content: Text(e.message!));
+  //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  //   }
+  // }
 
   Future resetPass(String email) async {
     try {

@@ -1,14 +1,27 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:simplelogin/Helper/helper_functions.dart';
-import 'package:simplelogin/user_auth/login_screen.dart';
-import 'package:simplelogin/views/LoginPage.dart';
-import 'package:simplelogin/views/NavigationHome.dart';
+import 'package:simplelogin/views/homepage.dart';
+import 'package:simplelogin/views/onboarding.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  getLoggedIn();
   runApp(MyApp());
+}
+
+bool _isLoggedin = false;
+getLoggedIn() async {
+  HelperFunctions.getUserLoggedInSharedPreference().then((value) {
+    if (value == true) {
+      _isLoggedin = true;
+    }
+    if (value == false && value == null) {
+      _isLoggedin = false;
+    }
+  });
 }
 
 class MyApp extends StatefulWidget {
@@ -18,52 +31,13 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
-  @override
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Chat Application',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home:LoginScreen() 
-        // Home()
-        );
-  }
-}
-
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
-
-  @override
-  _HomeState createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
-  @override
-  void initState() {
-    super.initState();
-    getLoggedIn();
-  }
-
-  getLoggedIn() async {
-    await HelperFunctions.getUserLoggedInSharedPreference().then((value) async {
-      print(value);
-      if (value! == true) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => HomeNav()),
-        );
-      } else {}
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      extendBodyBehindAppBar: true,
-      body: LoginPage(),
-    );
+            primarySwatch: Colors.blue,
+            textTheme: GoogleFonts.poppinsTextTheme()),
+        home: _isLoggedin ? HomeNav() : OnBoardingScreen());
   }
 }

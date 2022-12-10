@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:simplelogin/Helper/constants.dart';
 import 'package:simplelogin/Helper/helper_functions.dart';
 import 'package:simplelogin/Services/Authentication_services.dart';
-import 'package:simplelogin/views/LoginPage.dart';
+import 'package:simplelogin/views/authentication_screen.dart';
 
 class Account extends StatefulWidget {
   const Account({Key? key}) : super(key: key);
@@ -30,7 +30,7 @@ class _AccountState extends State<Account> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF160623),
+      backgroundColor: Color(0xff191720),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -58,8 +58,10 @@ class _AccountState extends State<Account> {
           ElevatedButton(
             onPressed: () {
               AuthMethod().signOut();
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => LoginPage()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => AuthenticationScreen()));
             },
             child: Text("Logout"),
             style: ElevatedButton.styleFrom(
@@ -74,29 +76,25 @@ class _AccountState extends State<Account> {
           ),
           Spacer(),
           Container(
-            child: Stack(
+            margin: EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Positioned(
-                  top: 30,
-                  left: 30,
-                  child: Row(
-                    children: [
-                      Text("Developer email: ", style: TextStyle(fontSize: 15, color: Colors.white54),),
-                      Text("gajjarmohit501@gmail.com ", style: TextStyle(fontSize: 15, color: Colors.white),),
-                    ],
+                Text(
+                  "Developer email: debuglabs.io@gmail.com",
+                  style: TextStyle(fontSize: 15, color: Colors.white54),
+                ),
+                Text(
+                  "Developed By:",
+                  style: TextStyle(fontSize: 15, color: Colors.white54),
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: SizedBox(
+                    height: 100,
+                    child: Image(image: AssetImage('assets/logo.png')),
                   ),
                 ),
-                Positioned(
-                  top: 50,
-                  left: 30,
-                  child: Text("Developed By:", style: TextStyle(fontSize: 15, color: Colors.white54),)),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Image(
-                   
-                    image: AssetImage('assets/logo.png')),
-                ),
-             
               ],
             ),
           )
